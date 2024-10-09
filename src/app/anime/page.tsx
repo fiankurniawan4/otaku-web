@@ -38,7 +38,6 @@ export default function AnimePage() {
   }, [animeLink]);
 
   const handleEpisodeClick = (linkvid: string) => {
-    // Navigate to the episode page and pass the linkvid as a query parameter
     router.push(`/anime/episode?link=${encodeURIComponent(linkvid)}`);
   };
 

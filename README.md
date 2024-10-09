@@ -19,3 +19,10 @@ pnpm dev
 # or
 bun dev
 ```
+
+## Picture website
+
+![plot](./home.png)
+![plot](./search.png)
+![plot](./episode.png)
+![plot](./video.png)
