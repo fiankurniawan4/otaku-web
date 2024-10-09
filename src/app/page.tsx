@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation'; // Import useRouter
 
 type OtakuData = {
   jdlflm: string;
@@ -9,11 +10,11 @@ type OtakuData = {
   genre: string;
 };
 
-
 export default function Home() {
   const [otakuData, setOtakuData] = useState<OtakuData[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter(); // Initialize useRouter
 
   useEffect(() => {
     fetch('/api/otakudesu')
@@ -54,6 +55,11 @@ export default function Home() {
   const ongoingAnime = otakuData.slice(0, 15);
   const completedAnime = otakuData.slice(15);
 
+  const handleReadMore = (link: string) => {
+    // Navigate to the anime page with the link as a query parameter
+    router.push(`/anime?link=${encodeURIComponent(link)}`);
+  };
+
   return (
     <div className="grid grid-cols-1 gap-8 p-8 mx-auto max-w-6xl">
       <form className="flex items-center justify-center" onSubmit={handleSearch}>
@@ -90,7 +96,12 @@ export default function Home() {
                       <img src={otaku.img} alt={otaku.jdlflm} className="rounded-lg w-32 h-48 object-cover mr-4" />
                       <div>
                         <h2 className="text-xl font-bold">{otaku.jdlflm}</h2>
-                        <a href={otaku.link} className="text-blue-500 hover:underline mt-2 inline-block">Read more</a>
+                        <button
+                          onClick={() => handleReadMore(otaku.link)} // Use button to navigate
+                          className="text-blue-500 hover:underline mt-2 inline-block"
+                        >
+                          Read more
+                        </button>
                       </div>
                     </div>
                   ))}
@@ -105,7 +116,12 @@ export default function Home() {
                         <img src={otaku.img} alt={otaku.jdlflm} className="rounded-lg w-32 h-48 object-cover mr-4" />
                         <div>
                           <h2 className="text-xl font-bold">{otaku.jdlflm}</h2>
-                          <a href={otaku.link} className="text-blue-500 hover:underline mt-2 inline-block">Read more</a>
+                          <button
+                            onClick={() => handleReadMore(otaku.link)} // Use button to navigate
+                            className="text-blue-500 hover:underline mt-2 inline-block"
+                          >
+                            Read more
+                          </button>
                         </div>
                       </div>
                     ))}
@@ -123,7 +139,12 @@ export default function Home() {
                   <div>
                     <h2 className="text-xl font-bold">{otaku.jdlflm}</h2>
                     <p className="text-sm text-gray-500">{otaku.genre}</p>
-                    <a href={otaku.link} className="text-blue-500 hover:underline mt-2 inline-block">Read more</a>
+                    <button
+                      onClick={() => handleReadMore(otaku.link)} // Use button to navigate
+                      className="text-blue-500 hover:underline mt-2 inline-block"
+                    >
+                      Read more
+                    </button>
                   </div>
                 </div>
               ))}
